@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Recipe</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background: url('data:image/svg+xml;utf8,<svg fill="black" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>') no-repeat right 10px center;
+            background-size: 12px;
+        }
+        .btn-success {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 16px;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+        .btn-success:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Recipe</h1>
+        <form th:object="${recipe}" th:action="@{/save}" method="post">
+            <input type="hidden" th:field="*{recipeId}" readonly="readonly" />
+            <label for="dish">Dish</label>
+            <input type="text" id="dish" th:field="*{dish}" />
+            <label for="time">Time (minutes)</label>
+            <input type="number" id="time" th:field="*{time}" />
+            <label for="instructions">Instructions</label>
+            <input type="text" id="instructions" th:field="*{instructions}" />
+            <label for="culist">Cuisine</label>
+            <select id="culist" th:field="*{cuisine.cuisineId}">
+                <option th:each="cuisine : ${cuisine}" th:value="${cuisine.cuisineId}" th:text="${cuisine.type}"></option>
+            </select>
+            <label for="diflist">Difficulty</label>
+            <select id="diflist" th:field="*{difficulty.difficultyId}">
+                <option th:each="difficulty : ${difficulty}" th:value="${difficulty.difficultyId}" th:text="${difficulty.level}"></option>
+            </select>
+            <button type="submit" class="btn btn-success">Save</button>
+        </form>
+    </div>
+</body>
+</html>
